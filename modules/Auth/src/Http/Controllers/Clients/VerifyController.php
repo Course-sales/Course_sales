@@ -1,0 +1,22 @@
+<?php
+
+namespace Modules\Auth\src\Http\Controllers\Clients;
+
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class VerifyController extends Controller
+{
+    public function index(Request $request) {
+        $user = $request->user();
+        // Nếu đã được xác thực (model imple Musverify)
+        if($user->hasVerifiedEmail()) {
+            return redirect()->route('client.course.index');
+        }
+        $pageTitle = 'activate account';
+        return view('Auth::clients.verify', compact('pageTitle'));
+    }
+}
